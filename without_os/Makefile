@@ -12,6 +12,7 @@ PROJ_NAME=main
 
 CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
+GDB=arm-none-eabi-gdb
 
 CFLAGS  = -g -O2 -Wall -Tstm32_flash.ld 
 CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m4 -mthumb-interwork
@@ -52,3 +53,15 @@ clean:
 	rm -f $(PROJ_NAME).elf
 	rm -f $(PROJ_NAME).hex
 	rm -f $(PROJ_NAME).bin
+
+gdbwrite: all
+	@echo '################################################'
+	@echo '##### Use me after running "sudo st-util". #####'
+	@echo '################################################'
+	$(GDB) -x gdbwrite.boot $(PROJ_NAME).elf
+
+gdbattach: all
+	@echo '################################################'
+	@echo '##### Use me after running "sudo st-util". #####'
+	@echo '################################################'
+	$(GDB) -x gdbattach.boot $(PROJ_NAME).elf
